@@ -4,6 +4,12 @@
   become: true
   tasks:
 
+  - name: install update (CentOS)
+    dnf:
+      update_only: yes
+      update_cache: yes
+    when: ansible_distribution == "CentOS"
+
   - name: install apache2 and php package for Ubuntu
     package: 
       name: 
@@ -13,5 +19,15 @@
       update_cache: yes      
     when: ansible_distribution == "Ubuntu"      
 
+- hosts: web_servers
+  become: true
+  tasks:
 
+  - name: install apache
+    apt:
+      name:
+        - apache2
+      state: latest
+    
+     
 
